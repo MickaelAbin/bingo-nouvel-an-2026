@@ -232,6 +232,7 @@ function resetGrid() {
 }
 
 function newGrid() {
+  removeVictoryPopup();
   gameState.currentGrid = generateGrid();
   gameState.checkedCells = Array(25).fill(false);
   gameState.hasBingo = false;
@@ -239,12 +240,20 @@ function newGrid() {
 }
 
 function goHome() {
+  removeVictoryPopup();
   gameState.currentPage = 'home';
   gameState.playerName = '';
   gameState.currentGrid = [];
   gameState.checkedCells = [];
   gameState.hasBingo = false;
   renderHome();
+}
+
+function removeVictoryPopup() {
+  const popup = document.querySelector('.popup-overlay');
+  if (popup) {
+    popup.remove();
+  }
 }
 
 // ADMIN SECTION
