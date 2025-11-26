@@ -1,0 +1,454 @@
+/* DESIGN SYSTEM & VARIABLES */
+:root {
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+  --color-bg-1: rgba(59, 130, 246, 0.08);
+  --color-bg-2: rgba(245, 158, 11, 0.08);
+  --color-bg-3: rgba(34, 197, 94, 0.08);
+  --color-bg-4: rgba(239, 68, 68, 0.08);
+  --color-bg-5: rgba(147, 51, 234, 0.08);
+  --color-bg-6: rgba(249, 115, 22, 0.08);
+  --color-bg-7: rgba(236, 72, 153, 0.08);
+  --color-bg-8: rgba(6, 182, 212, 0.08);
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --radius-base: 8px;
+  --radius-lg: 12px;
+  --duration-normal: 250ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-base);
+  background: linear-gradient(135deg, #001a4d 0%, #0033cc 50%, #001a4d 100%);
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* PAGE ACCUEIL */
+.home-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-16);
+  position: relative;
+}
+
+.home-page::before {
+  content: "✨ Bonne Année 2026 ✨";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: rgba(255, 215, 0, 0.3);
+  font-size: var(--font-size-base);
+  padding: var(--space-8);
+}
+
+.home-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: var(--space-32);
+  border-radius: var(--radius-lg);
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.home-title {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  margin-bottom: var(--space-8);
+  color: #001a4d;
+}
+
+.home-subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-24);
+}
+
+.form-group {
+  margin-bottom: var(--space-16);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-8);
+  font-weight: 500;
+  font-size: var(--font-size-lg);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--space-12);
+  font-size: var(--font-size-lg);
+  border: 2px solid #FFD700;
+  border-radius: var(--radius-base);
+  background: white;
+  color: var(--color-text);
+  transition: border-color var(--duration-normal) var(--ease-standard);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4169E1;
+  box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.3);
+}
+
+.btn {
+  padding: var(--space-12) var(--space-24);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  background: #FFD700;
+  color: #001a4d;
+}
+
+.btn:hover {
+  background: #FFC700;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.admin-button {
+  position: absolute;
+  bottom: var(--space-16);
+  right: var(--space-16);
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: var(--space-12);
+  font-size: var(--font-size-2xl);
+  cursor: pointer;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.admin-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+/* PAGE JEUX */
+.game-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-16);
+  background: linear-gradient(135deg, #001a4d 0%, #0033cc 50%, #001a4d 100%);
+}
+
+.game-header {
+  text-align: center;
+  color: white;
+  margin-bottom: var(--space-24);
+}
+
+.game-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  margin-bottom: var(--space-8);
+}
+
+.game-player {
+  font-size: var(--font-size-xl);
+  color: #FFD700;
+}
+
+.counter {
+  text-align: center;
+  color: white;
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-16);
+  font-weight: 600;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-8);
+  max-width: 500px;
+  margin: 0 auto var(--space-24);
+  width: 100%;
+}
+
+.bingo-cell {
+  aspect-ratio: 1;
+  background: white;
+  border: 3px solid #FFD700;
+  border-radius: var(--radius-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  color: #001a4d;
+}
+
+.bingo-cell:hover {
+  transform: scale(1.05);
+}
+
+.bingo-cell.checked {
+  background: #FFD700;
+  color: white;
+}
+
+.game-buttons {
+  display: flex;
+  gap: var(--space-12);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* PAGE ADMIN */
+.admin-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-16);
+  background: linear-gradient(135deg, #001a4d 0%, #0033cc 50%, #001a4d 100%);
+}
+
+.admin-container {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.admin-title {
+  color: white;
+  text-align: center;
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-24);
+}
+
+.admin-login {
+  background: rgba(255, 255, 255, 0.95);
+  padding: var(--space-24);
+  border-radius: var(--radius-lg);
+}
+
+.songs-list {
+  background: rgba(255, 255, 255, 0.95);
+  padding: var(--space-24);
+  border-radius: var(--radius-lg);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.song-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-12);
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.song-item input[type="checkbox"] {
+  margin-right: var(--space-12);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.song-item label {
+  flex: 1;
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+}
+
+.admin-buttons {
+  display: flex;
+  gap: var(--space-12);
+  justify-content: center;
+  margin-top: var(--space-24);
+}
+
+/* POPUP */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn var(--duration-normal);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-content {
+  background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+  padding: var(--space-32);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  max-width: 500px;
+  animation: popupBounce 0.5s ease-out;
+}
+
+@keyframes popupBounce {
+  0% { transform: scale(0.5) translateY(-50px); opacity: 0; }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.popup-title {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: #001a4d;
+  margin-bottom: var(--space-12);
+}
+
+.popup-text {
+  font-size: var(--font-size-xl);
+  color: #001a4d;
+  margin-bottom: var(--space-24);
+}
+
+.popup-buttons {
+  display: flex;
+  gap: var(--space-12);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  top: var(--space-16);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 215, 0, 0.95);
+  color: #001a4d;
+  padding: var(--space-12) var(--space-24);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  z-index: 999;
+  animation: toastSlideIn 0.3s ease-out, toastSlideOut 0.3s ease-in 2.7s forwards;
+}
+
+@keyframes toastSlideIn {
+  from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+@keyframes toastSlideOut {
+  from { transform: translateX(-50%) translateY(0); opacity: 1; }
+  to { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+}
+
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  z-index: 998;
+  pointer-events: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .game-grid {
+    max-width: 100%;
+  }
+
+  .home-content {
+    padding: var(--space-16);
+  }
+
+  .popup-content {
+    margin: var(--space-16);
+  }
+}
