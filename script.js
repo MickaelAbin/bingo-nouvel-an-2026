@@ -45,6 +45,8 @@ const CONFIG = {
   ]
 };
 
+const FINDERS = ['Aurelle', 'Lorane', 'Jean', 'Julien', 'Nolwenn', 'Enfant'];
+
 // État global
 let gameState = {
   currentPage: 'home',
@@ -52,7 +54,9 @@ let gameState = {
   currentGrid: [],
   checkedCells: [],
   hasBingo: false,
-  songStates: {}
+  hasBingo: false,
+  songStates: {},
+  songWinners: {} // { songIndex: ['Name1', 'Name2'] }
 };
 
 // Initialiser songStates
@@ -175,14 +179,14 @@ function checkBingo() {
 
   // Vérifier les lignes
   for (let i = 0; i < 5; i++) {
-    if (checked[i*5] && checked[i*5+1] && checked[i*5+2] && checked[i*5+3] && checked[i*5+4]) {
+    if (checked[i * 5] && checked[i * 5 + 1] && checked[i * 5 + 2] && checked[i * 5 + 3] && checked[i * 5 + 4]) {
       return true;
     }
   }
 
   // Vérifier les colonnes
   for (let i = 0; i < 5; i++) {
-    if (checked[i] && checked[i+5] && checked[i+10] && checked[i+15] && checked[i+20]) {
+    if (checked[i] && checked[i + 5] && checked[i + 10] && checked[i + 15] && checked[i + 20]) {
       return true;
     }
   }
@@ -286,7 +290,10 @@ function showAdminPage() {
     songsHTML += `
       <div class="song-item">
         <input type="checkbox" id="song_${index}" ${isChecked ? 'checked' : ''} onchange="toggleSong(${index})">
-        <label for="song_${index}">${index + 1}. ${song}</label>
+        <label for="song_${index}">
+          ${index + 1}. ${song}
+          ${gameState.songWinners[index] ? `<span class="winners-tag">(${gameState.songWinners[index].join(', ')})</span>` : ''}
+        </label>
       </div>
     `;
   });
@@ -295,6 +302,15 @@ function showAdminPage() {
     <div class="admin-page">
       <div class="admin-container">
         <h1 class="admin-title">Liste des chansons</h1>
+        
+        <!-- Leaderboard -->
+        <div class="leaderboard">
+          <h3>Classement</h3>
+          <div class="leaderboard-grid">
+            ${getLeaderboardHTML()}
+          </div>
+        </div>
+
         <div class="songs-list">${songsHTML}</div>
         <div class="admin-buttons">
           <button class="btn" onclick="resetAllSongs()">Réinitialiser</button>
@@ -305,14 +321,107 @@ function showAdminPage() {
   `;
 }
 
+function getLeaderboardHTML() {
+  const scores = {};
+  FINDERS.forEach(finder => scores[finder] = 0);
+
+  Object.values(gameState.songWinners).forEach(winners => {
+    if (Array.isArray(winners)) {
+      winners.forEach(winner => {
+        if (scores[winner] !== undefined) {
+          scores[winner]++;
+        }
+      });
+    }
+  });
+
+  // Trier par score décroissant
+  const sortedFinders = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+  return sortedFinders.map(([name, score]) => `
+    <div class="leaderboard-item">
+      <span class="finder-name">${name}</span>
+      <span class="finder-score">${score} pts</span>
+    </div>
+  `).join('');
+}
+
 function toggleSong(index) {
-  gameState.songStates[index] = !gameState.songStates[index];
+  const checkbox = document.getElementById(`song_${index}`);
+  const isChecked = checkbox.checked;
+
+  if (isChecked) {
+    // Si on coche, on ouvre la modale pour choisir les gagnants
+    // On remet la checkbox à false en attendant la validation
+    checkbox.checked = false;
+    showWinnerSelectionModal(index);
+  } else {
+    // Si on décoche, on enlève le point et on valide
+    delete gameState.songWinners[index];
+    gameState.songStates[index] = false;
+    showAdminPage(); // Rafraîchir pour mettre à jour le classement
+  }
+}
+
+function showWinnerSelectionModal(index) {
+  const songName = CONFIG.songs[index];
+
+  const checkboxesHTML = FINDERS.map(finder => `
+    <div class="finder-option">
+      <input type="checkbox" id="finder_${finder}" value="${finder}">
+      <label for="finder_${finder}">${finder}</label>
+    </div>
+  `).join('');
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-content">
+      <h3>Qui a trouvé ?</h3>
+      <p class="song-title">${songName}</p>
+      <div class="finders-list">
+        ${checkboxesHTML}
+      </div>
+      <div class="modal-buttons">
+        <button class="btn" onclick="confirmWinners(${index})">Valider</button>
+        <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+function confirmWinners(index) {
+  const selectedWinners = [];
+  FINDERS.forEach(finder => {
+    const checkbox = document.getElementById(`finder_${finder}`);
+    if (checkbox && checkbox.checked) {
+      selectedWinners.push(finder);
+    }
+  });
+
+  if (selectedWinners.length > 0) {
+    gameState.songWinners[index] = selectedWinners;
+    gameState.songStates[index] = true;
+    closeModal();
+    showAdminPage();
+  } else {
+    alert('Veuillez sélectionner au moins une personne.');
+  }
+}
+
+function closeModal() {
+  const overlay = document.querySelector('.modal-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
 }
 
 function resetAllSongs() {
   CONFIG.songs.forEach((_, index) => {
     gameState.songStates[index] = false;
   });
+  gameState.songWinners = {};
   showAdminPage();
 }
 
